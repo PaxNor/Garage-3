@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Garage_3.Data;
 using Garage_3.Models;
+using Garage_3.ViewModels;
 
 namespace Garage_3.Controllers
 {
@@ -56,15 +57,15 @@ namespace Garage_3.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,RegNbr,Color,Brand,Model,WheelCount,MemberId")] Vehicle vehicle)
+        public async Task<IActionResult> Create(/*[Bind("Id,RegNbr,Color,Brand,Model,WheelCount,MemberId")]*/ CheckinViewModel checkinViewModel)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(vehicle);
-                await _context.SaveChangesAsync();
+                //_context.Add(checkinViewModel);
+                //await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(vehicle);
+            return View(checkinViewModel);
         }
 
         // GET: Vehicles/Edit/5
@@ -88,7 +89,7 @@ namespace Garage_3.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,RegNbr,Color,Brand,Model,WheelCount,MemberId")] Vehicle vehicle)
+        public async Task<IActionResult> Edit(int id, /*[Bind("Id,RegNbr,Color,Brand,Model,WheelCount,MemberId")]*/ Vehicle vehicle)
         {
             if (id != vehicle.Id)
             {

@@ -13,6 +13,8 @@ builder.Services.AddControllersWithViews();
 // Lade till ny service för Members personnummer som en select list
 builder.Services.AddScoped<IGeneratePersonNumberSelectList, GeneratePersonNumberSelectList>();
 
+builder.Services.AddScoped<IGenerateVehicleTypeSelectList, GenerateVehicleTypeSelectList>();
+
 var app = builder.Build();
 
 
