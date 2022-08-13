@@ -7,7 +7,7 @@ namespace Garage_3.Auxilary
     {
         protected override ValidationResult? IsValid(object? value, ValidationContext validationContext) {
 
-            Regex rgx = new Regex(@"^\d{12}");
+            Regex rgx = new Regex(@"^\d{10}");
 
             if(value is string input)
             {

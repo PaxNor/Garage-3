@@ -69,6 +69,23 @@ namespace Garage_3.Controllers
             return View(member);
         }
 
+        /* 
+         * Check if a member is already in the data base
+         * 
+         * This does not work!
+         * 
+         * reference: https://docs.microsoft.com/en-us/aspnet/core/mvc/models/validation?view=aspnetcore-6.0#remote-attribute
+         */
+        [AcceptVerbs("GET", "POST")]
+        public IActionResult IsInDataBase(string personNumber)
+        {
+            int result = _context.Member.Where(m => m.PersNr == personNumber).Count();
+            if (result != 0) {
+                return Json($"Personnummer: {personNumber} finns redan registrerat");
+            }
+            return Json(true);
+        }
+
         // GET: Members/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
