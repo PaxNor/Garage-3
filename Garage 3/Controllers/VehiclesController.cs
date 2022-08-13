@@ -54,10 +54,32 @@ namespace Garage_3.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(CheckinViewModel checkinViewModel)
         {
-            if (ModelState.IsValid)
-            {
-                //_context.Add(checkinViewModel);
-                //await _context.SaveChangesAsync();
+            if (ModelState.IsValid) {
+
+                var member = _context.Member.Where(m => m.PersNr == checkinViewModel.PersNr).First();
+                var vehicleType = _context.VehicleType.Where(vt => vt.Name == checkinViewModel.VehicleType).First();
+
+                Parking parking = new Parking() {
+                    ArrivalTime = DateTime.Now,
+                };
+
+                Vehicle vehicle = new Vehicle() {
+                    WheelCount = checkinViewModel.WheelCount,
+                    Color = checkinViewModel.Color,
+                    Brand = checkinViewModel.Brand,
+                    RegNbr = checkinViewModel.RegNbr,
+                    Model = checkinViewModel.Model,
+
+                    // navigation properties
+                    VehicleType = vehicleType,
+                    Parking = parking,
+                    
+                    // foreign key
+                    MemberId = member.Id
+                };
+
+                _context.Add(vehicle);
+                await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
             return View(checkinViewModel);
