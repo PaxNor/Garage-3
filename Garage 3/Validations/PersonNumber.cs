@@ -1,7 +1,8 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Garage_3.Auxiliary;
+using System.ComponentModel.DataAnnotations;
 using System.Text.RegularExpressions;
 
-namespace Garage_3.Auxilary
+namespace Garage_3.Validations
 {
     public class PersonNumber : ValidationAttribute
     {
