@@ -1,4 +1,5 @@
-﻿using Garage_3.Data;
+﻿using Garage_3.Auxiliary;
+using Garage_3.Data;
 using Garage_3.Models;
 using Garage_3.ViewModels;
 using Microsoft.AspNetCore.Mvc;
@@ -67,7 +68,7 @@ namespace Garage_3.Controllers
                     WheelCount = checkinViewModel.WheelCount,
                     Color = checkinViewModel.Color,
                     Brand = checkinViewModel.Brand,
-                    RegNbr = checkinViewModel.RegNbr,
+                    RegNbr = StringFormatter.CompactLicensePlate(checkinViewModel.RegNbr),
                     Model = checkinViewModel.Model,
 
                     // navigation properties
