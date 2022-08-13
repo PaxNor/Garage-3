@@ -1,10 +1,7 @@
-﻿using Garage_2._0.Auxilary;
-using Garage_2._0.Models;
-using Garage_2._0.ViewModels;
+﻿using Garage_3.Models;
 using System.ComponentModel.DataAnnotations;
-using System.Text.RegularExpressions;
 
-namespace Garage_2._0.Validations
+namespace Garage_3.Validations
 {
     public class FullName : ValidationAttribute
     {

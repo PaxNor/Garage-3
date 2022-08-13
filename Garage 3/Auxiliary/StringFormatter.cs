@@ -1,6 +1,6 @@
 ﻿using System.Text;
 
-namespace Garage_2._0.Auxilary
+namespace Garage_3.Auxilary
 {
     static class StringFormatter
     {

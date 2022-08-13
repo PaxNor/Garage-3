@@ -1,4 +1,6 @@
-﻿using System.ComponentModel;
+﻿using Garage_3.Auxilary;
+using Garage_3.Validations;
+using System.ComponentModel;
 
 namespace Garage_3.Models
 {
@@ -10,10 +12,11 @@ namespace Garage_3.Models
         public string FirstName { get; set; }
 
         [DisplayName("Efternamn")]
-        //[FullName(ErrorMessage = "Förnamn och Efternamn kan inte vara samma!")]
+        [FullName(ErrorMessage = "Förnamn och Efternamn kan inte vara samma!")]
         public string LastName { get; set; }
 
         [DisplayName("Personnummer")]
+        [PersonNumber(ErrorMessage = "Personnummer måste innehålla 12 siffror")]
         public string PersNr { get; set; }
 
         public List<Vehicle> Vehicles { get; set; } = new List<Vehicle>();

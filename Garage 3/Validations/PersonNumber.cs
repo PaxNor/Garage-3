@@ -1,15 +1,13 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Text.RegularExpressions;
 
-namespace Garage_2._0.Auxilary
+namespace Garage_3.Auxilary
 {
     public class PersonNumber : ValidationAttribute
     {
         protected override ValidationResult? IsValid(object? value, ValidationContext validationContext) {
 
-            ErrorMessage = "Ej giltigt personnummer";
-
-            Regex rgx = new Regex(@"\d{12}");
+            Regex rgx = new Regex(@"^\d{12}");
 
             if(value is string input)
             {
@@ -18,10 +16,6 @@ namespace Garage_2._0.Auxilary
             }
 
             return new ValidationResult(ErrorMessage);
-        }
-
-        public PersonNumber(String errorMessage) {
-            this.ErrorMessage = errorMessage;
         }
     }
 }
