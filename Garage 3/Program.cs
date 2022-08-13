@@ -4,7 +4,7 @@ using Garage_3.Data;
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<Garage_3Context>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("Garage_3Context") ?? throw new InvalidOperationException("Connection string 'Garage_3Context' not found.")));
-//Test
+
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
