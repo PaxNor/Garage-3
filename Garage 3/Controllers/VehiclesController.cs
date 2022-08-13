@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using Garage_3.Data;
+﻿using Garage_3.Data;
 using Garage_3.Models;
 using Garage_3.ViewModels;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Garage_3.Controllers
 {
@@ -57,7 +52,7 @@ namespace Garage_3.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(/*[Bind("Id,RegNbr,Color,Brand,Model,WheelCount,MemberId")]*/ CheckinViewModel checkinViewModel)
+        public async Task<IActionResult> Create(CheckinViewModel checkinViewModel)
         {
             if (ModelState.IsValid)
             {

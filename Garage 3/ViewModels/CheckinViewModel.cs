@@ -26,7 +26,5 @@ namespace Garage_3.ViewModels
         public int WheelCount { get; set; }
 
         public VehicleType VehicleType { get; set; }
-        
-      
     }
 }
