@@ -6,6 +6,7 @@ namespace Garage_3.ViewModels
 {
     public class CheckinViewModel
     {
+        // add age verification as attribute
         public string PersNr { get; set; }
 
         public string VehicleType { get; set; }

@@ -19,5 +19,7 @@ namespace Garage_3.Data
         public DbSet<Garage_3.Models.Vehicle>? Vehicle { get; set; }
 
         public DbSet<Garage_3.Models.VehicleType>? VehicleType { get; set; }
+
+        public DbSet<Garage_3.Models.Parking>? Parkings { get; set; }
     }
 }

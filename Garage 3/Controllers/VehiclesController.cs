@@ -19,9 +19,43 @@ namespace Garage_3.Controllers
         // GET: Vehicles
         public async Task<IActionResult> Index()
         {
-              return _context.Vehicle != null ? 
-                          View(await _context.Vehicle.ToListAsync()) :
-                          Problem("Entity set 'Garage_3Context.Vehicle'  is null.");
+            List<ParkedVehiclesViewModel> vmList = new();
+            int hours, minutes;
+
+            if (_context.Parkings == null) return Problem("Entity set 'Garage_3Context.Parkings' is null.");
+            if (_context.Vehicle == null) return Problem("Entity set 'Garage_3Context.Vehicle' is null.");
+            if (_context.Member == null) return Problem("Entity set 'Garage_3Context.Member' is null.");
+
+            foreach (var parkingSpot in _context.Parkings) {
+
+                double parkedTime = (DateTime.Now - parkingSpot.ArrivalTime).TotalMinutes;
+                Vehicle? vehicle  = _context.Vehicle.Where(v => v.Id == parkingSpot.VehicleId).FirstOrDefault();
+                Member? member    = _context.Member.Where(m => m.Id == vehicle.MemberId).FirstOrDefault();
+                VehicleType type  = vehicle.VehicleType;
+
+                hours = (int)parkedTime / 60;
+                minutes = (int)(parkedTime - (hours * 60));
+
+                ParkedVehiclesViewModel vm = new();
+                vm.FirstName = member.FirstName;
+                vm.LastName = member.LastName;
+                vm.PersNr = member.PersNr;
+                vm.ParkedTime = String.Format("{0}:{1}", hours, minutes);
+                vm.RegNr = vehicle.RegNbr;
+                vm.Brand = vehicle.Brand;
+                vm.Model = vehicle.Model;
+                vm.Type = type.Name;
+                vm.Color = vehicle.Color;
+                vm.WheelCount = vehicle.WheelCount;
+             
+                vmList.Add(vm);
+            }
+
+            return View(vmList);
+
+            //return _context.Vehicle != null ? 
+            //              View(await _context.Vehicle.ToListAsync()) :
+            //              Problem("Entity set 'Garage_3Context.Vehicle'  is null.");
         }
 
         // GET: Vehicles/Details/5
