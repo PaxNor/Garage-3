@@ -8,6 +8,8 @@ namespace Garage_3.ViewModels
     {
         public string PersNr { get; set; }
 
+        public string VehicleType { get; set; }
+
         [RegularExpression(@"[A-z0-9 ]*", ErrorMessage = "Endast siffror och bokstäver")]
         [Required(ErrorMessage = "Ange ett registreringsnummer")]
         [DisplayName("Resistreringsnummer")]
@@ -23,8 +25,6 @@ namespace Garage_3.ViewModels
         public string Model { get; set; }
 
         [DisplayName("Hjulantal")]
-        public int WheelCount { get; set; }
-
-        public VehicleType VehicleType { get; set; }
+        public int WheelCount { get; set; }   
     }
 }
