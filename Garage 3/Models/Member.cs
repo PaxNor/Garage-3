@@ -15,7 +15,7 @@ namespace Garage_3.Models
         public string LastName { get; set; }
 
         [DisplayName("Personnummer")]
-        [PersonNumber(ErrorMessage = "Personnummer måste innehålla 10 siffror")]
+        [PersonNumber(ErrorMessage = "Personnummer måste ha 12 siffror")]
         //[Remote(action: "IsInDataBase", controller: "MembersController")]
         public string PersNr { get; set; }
 

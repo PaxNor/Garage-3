@@ -1,4 +1,5 @@
 ﻿using Garage_3.Models;
+using Garage_3.Validations;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
@@ -6,9 +7,11 @@ namespace Garage_3.ViewModels
 {
     public class CheckinViewModel
     {
-        // add age verification as attribute
+        [DisplayName("Personnummer")]
+        [AgeVerification(ErrorMessage = "Man måste vara 18 år för att parkera")]
         public string PersNr { get; set; }
 
+        [DisplayName("Fordonstyp")]
         public string VehicleType { get; set; }
 
         [RegularExpression(@"[A-z0-9 ]*", ErrorMessage = "Endast siffror och bokstäver")]
