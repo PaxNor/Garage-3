@@ -16,13 +16,20 @@
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-            <select class = "form-control" asp-for = "PersNr" asp-items = "@await personNumberService.GetMemberPersonNumberAsync()">
-                <option selected = "selected" value = "">Välj en medlem</option>
-            </select>
+            <div class="form-group">
+                <label asp-for="PersNr" class="control-label"></label>
+                <select class = "form-control" asp-for = "PersNr" asp-items = "@await personNumberService.GetMemberPersonNumberAsync()">
+                    <option selected = "selected" value = "">Välj en medlem</option>
+                </select>
+                <span asp-validation-for="PersNr" class="text-danger"></span>
+            </div>
 
-            <select class = "form-control" asp-for = "VehicleType" asp-items = "@await vehicleTypeService.GetVehicleTypeSelectListAsync()">
-                <option selected = "selected" value = "">Välj en fordonstyp</option>
-            </select>
+            <div class="form-group">
+                <label asp-for="VehicleType" class="control-label"></label>
+                <select class = "form-control" asp-for = "VehicleType" asp-items = "@await vehicleTypeService.GetVehicleTypeSelectListAsync()">
+                    <option selected = "selected" value = "">Välj en fordonstyp</option>
+                </select>
+            </div>
 
             <div class="form-group">
                 <label asp-for="RegNbr" class="control-label"></label>
