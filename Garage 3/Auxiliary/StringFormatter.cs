@@ -25,5 +25,10 @@ namespace Garage_3.Auxiliary
             }
             return sb.ToString();
         }
+
+        // prints compact person number as yyyymmdd-xxxx
+        public static string PrettyPrintPersonNumber(string personNumber) {
+            return personNumber.Substring(0, 8) + "-" + personNumber.Substring(8, 4);
+        }
     }
 }
