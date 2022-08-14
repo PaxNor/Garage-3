@@ -1,6 +1,7 @@
 ﻿using Garage_3.Auxiliary;
 using Garage_3.Data;
 using Garage_3.Models;
+using Garage_3.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -18,10 +19,36 @@ namespace Garage_3.Controllers
         // GET: Members
         public async Task<IActionResult> Index()
         {
-              return _context.Member != null ? 
-                          View(await _context.Member.ToListAsync()) :
-                          Problem("Entity set 'Garage_3Context.Member'  is null.");
+            var viewModel = new MemberOverviewViewModel()
+            {
+                Members = await _context.Member.ToListAsync()
+            };
+            return View(viewModel);
         }
+
+
+
+
+
+        public async Task<IActionResult> MemberOverviewSearch(MemberOverviewViewModel memberOverviewViewModel)
+        {
+            var members = string.IsNullOrWhiteSpace(memberOverviewViewModel.FirstName) ?
+                _context.Member :
+                _context.Member.Where(m => m.FirstName.StartsWith(memberOverviewViewModel.FirstName));
+
+            var viewModel = new MemberOverviewViewModel
+            {
+                Members = await members.ToListAsync()
+            };
+           
+            return View(nameof(Index), viewModel);
+        }
+
+
+
+
+
+
 
         // GET: Members/Details/5
         public async Task<IActionResult> Details(int? id)
