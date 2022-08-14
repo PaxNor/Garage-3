@@ -8,12 +8,12 @@ namespace Garage_3.Validations
     {
         protected override ValidationResult? IsValid(object? value, ValidationContext validationContext) {
 
-            Regex rgx = new Regex(@"^\d{10}");
+            Regex rgx = new Regex(@"^\d{12}");
 
             if(value is string input)
             {
                 input = StringFormatter.CompactPersonNumber(input);
-                if(rgx.IsMatch(input)) return ValidationResult.Success;
+                if(rgx.IsMatch(input) && input.Length == 12) return ValidationResult.Success;
             }
 
             return new ValidationResult(ErrorMessage);

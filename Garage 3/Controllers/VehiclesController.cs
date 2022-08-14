@@ -61,7 +61,7 @@ namespace Garage_3.Controllers
                 var vehicleType = _context.VehicleType.Where(vt => vt.Name == checkinViewModel.VehicleType).First();
 
                 Parking parking = new Parking() {
-                    ArrivalTime = DateTime.Now,
+                    ArrivalTime = DateTime.Now
                 };
 
                 Vehicle vehicle = new Vehicle() {
