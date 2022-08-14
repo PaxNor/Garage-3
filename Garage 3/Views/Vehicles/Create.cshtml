@@ -6,9 +6,8 @@
     ViewData["Title"] = "Create";
 }
 
-<h1>Create</h1>
+<h1>Checka in</h1>
 
-<h4>Vehicle</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -16,12 +15,12 @@
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-            <select class = "form-control" asp-for = "PersNr" asp-items = "@await personNumberService.GetMemberPersonNumberAsync()">
-                <option selected = "selected" value = "">Välj en medlem</option>
+            <select class = "form-control my-3" asp-for = "PersNr" asp-items = "@await personNumberService.GetMemberPersonNumberAsync()">
+                <option disabled selected title = "Välj en medlem" value = "">Välj en medlem</option>
             </select>
 
-            <select class = "form-control" asp-for = "VehicleType" asp-items = "@await vehicleTypeService.GetVehicleTypeSelectListAsync()">
-                <option selected = "selected" value = "">Välj en fordonstyp</option>
+            <select class = "form-control my-3" asp-for = "VehicleType" asp-items = "@await vehicleTypeService.GetVehicleTypeSelectListAsync()">
+                <option disabled selected title = "Välj en fordonstyp" value = "">Välj en fordonstyp</option>
             </select>
 
             <div class="form-group">
@@ -54,14 +53,14 @@
                 <select asp-for="MemberId" class ="form-control" asp-items="ViewBag.MemberId"></select>
             </div>*@
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Checka in" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">Hem</a>
 </div>
 
 @section Scripts {
