@@ -22,11 +22,11 @@ namespace Garage_3.Controllers
             List<ParkedVehiclesViewModel> vmList = new();
             int hours, minutes;
 
-            if (_context.Parkings == null) return Problem("Entity set 'Garage_3Context.Parkings' is null.");
+            if (_context.Parking == null) return Problem("Entity set 'Garage_3Context.Parkings' is null.");
             if (_context.Vehicle == null) return Problem("Entity set 'Garage_3Context.Vehicle' is null.");
             if (_context.Member == null) return Problem("Entity set 'Garage_3Context.Member' is null.");
 
-            foreach (var parkingSpot in _context.Parkings) {
+            foreach (var parkingSpot in _context.Parking) {
 
                 double parkedTime = (DateTime.Now - parkingSpot.ArrivalTime).TotalMinutes;
                 Vehicle? vehicle  = _context.Vehicle.Where(v => v.Id == parkingSpot.VehicleId).FirstOrDefault();
