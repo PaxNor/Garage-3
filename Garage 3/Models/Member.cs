@@ -1,4 +1,5 @@
 ﻿using Garage_3.Validations;
+using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel;
 
 namespace Garage_3.Models
@@ -16,7 +17,7 @@ namespace Garage_3.Models
 
         [DisplayName("Personnummer")]
         [PersonNumber(ErrorMessage = "Personnummer måste ha 12 siffror")]
-        //[Remote(action: "IsInDataBase", controller: "MembersController")]
+        [Remote(action: "IsInDataBase", controller: "Members")]
         public string PersNr { get; set; }
 
         public List<Vehicle> Vehicles { get; set; } = new List<Vehicle>();

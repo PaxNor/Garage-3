@@ -211,10 +211,6 @@ namespace Garage_3.Controllers
                 vehicle.Brand!,
                 member.PersNr);
 
-            //var parkId = vehicle.Parking.Id;
-
-            //var parkingSpot = await _context.
-
             //vehicle.Parking = null;
 
             //_context.Update(vehicle);
