@@ -47,6 +47,7 @@ namespace Garage_3.Controllers
                 vm.Type = vehicle.VehicleType.Name;//type.Name;
                 vm.Color = vehicle.Color;
                 vm.WheelCount = vehicle.WheelCount;
+                vm.Id = vehicle.Id;
              
                 vmList.Add(vm);
             }
@@ -244,7 +245,9 @@ namespace Garage_3.Controllers
                 vehicle.RegNbr,
                 vehicle.Color!,
                 vehicle.Brand!,
-                member.PersNr);
+                member.PersNr,
+                member.FirstName,
+                member.LastName);
 
             //vehicle.Parking = null;
 
