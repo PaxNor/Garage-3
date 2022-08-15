@@ -5,6 +5,7 @@ using Garage_3.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
+
 namespace Garage_3.Controllers
 {
     public class VehiclesController : Controller
@@ -201,18 +202,28 @@ namespace Garage_3.Controllers
         public async Task<IActionResult> Checkout(int id)
         {
             var vehicle = await _context.Vehicle.Include(v => v.Parking).FirstOrDefaultAsync(v => v.Id == id);
+            var member = await _context.Member.Where(m => m.Id == vehicle.MemberId).FirstOrDefaultAsync();
+
+            var receipt = new ReceiptViewModel(
+                vehicle.Parking.ArrivalTime,
+                vehicle.RegNbr,
+                vehicle.Color!,
+                vehicle.Brand!,
+                member.PersNr);
 
             //var parkId = vehicle.Parking.Id;
 
             //var parkingSpot = await _context.
 
-            vehicle.Parking = null;
+            //vehicle.Parking = null;
 
-            _context.Update(vehicle);
+            //_context.Update(vehicle);
 
-            await _context.SaveChangesAsync();
+            //await _context.SaveChangesAsync();
 
-            return RedirectToAction(nameof(Index));
+            return View("Receipt", receipt);
+
+            //return RedirectToAction(nameof(ReceiptViewModel));
         }
 
         private bool VehicleExists(int id)
