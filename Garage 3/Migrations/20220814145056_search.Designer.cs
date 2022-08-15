@@ -4,6 +4,7 @@ using Garage_3.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Garage_3.Migrations
 {
     [DbContext(typeof(Garage_3Context))]
-    partial class Garage_3ContextModelSnapshot : ModelSnapshot
+    [Migration("20220814145056_search")]
+    partial class search
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -138,7 +140,7 @@ namespace Garage_3.Migrations
 
             modelBuilder.Entity("Garage_3.Models.Vehicle", b =>
                 {
-                    b.HasOne("Garage_3.Models.Member", "Member")
+                    b.HasOne("Garage_3.Models.Member", null)
                         .WithMany("Vehicles")
                         .HasForeignKey("MemberId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -149,8 +151,6 @@ namespace Garage_3.Migrations
                         .HasForeignKey("VehicleTypeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Member");
 
                     b.Navigation("VehicleType");
                 });

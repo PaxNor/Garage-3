@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Garage_3.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Garage_3.Data
 {
@@ -11,10 +12,10 @@ namespace Garage_3.Data
 
         public DbSet<Garage_3.Models.Member> Member { get; set; } = default!;
 
-        public DbSet<Garage_3.Models.Vehicle>? Vehicle { get; set; }
+        public DbSet<Garage_3.Models.Vehicle> Vehicle => Set<Vehicle>();
 
-        public DbSet<Garage_3.Models.VehicleType>? VehicleType { get; set; }
+        public DbSet<Garage_3.Models.VehicleType> VehicleType { get; set; } = null!;
 
-        public DbSet<Garage_3.Models.Parking>? Parking { get; set; }
+        public DbSet<Garage_3.Models.Parking> Parking { get; set; }
     }
 }

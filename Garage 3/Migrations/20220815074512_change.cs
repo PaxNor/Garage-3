@@ -4,7 +4,7 @@
 
 namespace Garage_3.Migrations
 {
-    public partial class addeddbset : Migration
+    public partial class change : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

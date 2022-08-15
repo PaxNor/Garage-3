@@ -1,4 +1,5 @@
-﻿@model IEnumerable<Garage_3.Models.Vehicle>
+﻿@*@model IEnumerable<Garage_3.Models.Vehicle>*@
+@model IEnumerable<Garage_3.ViewModels.ParkedVehiclesViewModel>
 
 @{
     ViewData["Title"] = "Index";
@@ -7,22 +8,35 @@
 <h1>Index</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create">Checka in</a>
 </p>
+
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.RegNbr)
+                @Html.DisplayNameFor(model => model.FirstName)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Color)
+                @Html.DisplayNameFor(model => model.LastName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PersNr)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ParkedTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RegNr)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Brand)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Model)
+                @Html.DisplayNameFor(model => model.VehicleModel)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Color)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.WheelCount)
@@ -34,7 +48,37 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.RegNbr)
+                @Html.DisplayFor(modelItem => item.FirstName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LastName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PersNr)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ParkedTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RegNr)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Brand)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VehicleModel)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Color)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.WheelCount)
+            </td>
+
+
+
+@*            <td>
+                @Html.DisplayFor(modelItem => item.RegNr)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Color)
@@ -49,11 +93,11 @@
                 @Html.DisplayFor(modelItem => item.WheelCount)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                <a asp-action="Edit" asp-route-id="@item.Id">Redigera</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Detaljer</a> |
+                <a asp-action="Checkout" asp-route-id="@item.Id">Checka ut</a>
             </td>
-        </tr>
+*@        </tr>
 }
     </tbody>
 </table>

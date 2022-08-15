@@ -1,6 +1,7 @@
 ﻿using Garage_3.Auxiliary;
 using Garage_3.Data;
 using Garage_3.Models;
+using Garage_3.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -18,10 +19,36 @@ namespace Garage_3.Controllers
         // GET: Members
         public async Task<IActionResult> Index()
         {
-              return _context.Member != null ? 
-                          View(await _context.Member.ToListAsync()) :
-                          Problem("Entity set 'Garage_3Context.Member'  is null.");
+            var viewModel = new MemberOverviewViewModel()
+            {
+                Members = await _context.Member.ToListAsync()
+            };
+            return View(viewModel);
         }
+
+
+
+
+
+        public async Task<IActionResult> MemberOverviewSearch(MemberOverviewViewModel memberOverviewViewModel)
+        {
+            var members = string.IsNullOrWhiteSpace(memberOverviewViewModel.FirstName) ?
+                _context.Member :
+                _context.Member.Where(m => m.FirstName.StartsWith(memberOverviewViewModel.FirstName));
+
+            var viewModel = new MemberOverviewViewModel
+            {
+                Members = await members.ToListAsync()
+            };
+           
+            return View(nameof(Index), viewModel);
+        }
+
+
+
+
+
+
 
         // GET: Members/Details/5
         public async Task<IActionResult> Details(int? id)
@@ -54,6 +81,11 @@ namespace Garage_3.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,FirstName,LastName,PersNr")] Member member)
         {
+            if (CheckPerNr(member.PersNr))
+            {
+                ModelState.AddModelError("PersNr", $"Personnummer: {member.PersNr} finns redan registrerat");
+            }
+
             if (ModelState.IsValid)
             {
                 member.PersNr = StringFormatter.CompactPersonNumber(member.PersNr);
@@ -64,6 +96,11 @@ namespace Garage_3.Controllers
             return View(member);
         }
 
+        private bool CheckPerNr(string persNr)
+        {
+            return _context.Member.Any(m => m.PersNr == persNr);
+        }
+
         /* 
          * Check if a member is already in the data base
          * 
@@ -72,11 +109,11 @@ namespace Garage_3.Controllers
          * reference: https://docs.microsoft.com/en-us/aspnet/core/mvc/models/validation?view=aspnetcore-6.0#remote-attribute
          */
         [AcceptVerbs("GET", "POST")]
-        public IActionResult IsInDataBase(string personNumber)
+        public IActionResult IsInDataBase(string persNr)
         {
-            int result = _context.Member.Where(m => m.PersNr == personNumber).Count();
-            if (result != 0) {
-                return Json($"Personnummer: {personNumber} finns redan registrerat");
+            
+            if (CheckPerNr(persNr)) {
+                return Json($"Personnummer: {persNr} finns redan registrerat");
             }
             return Json(true);
         }

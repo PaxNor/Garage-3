@@ -6,9 +6,8 @@
     ViewData["Title"] = "Create";
 }
 
-<h1>Create</h1>
+<h1>Checka in</h1>
 
-<h4>Vehicle</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -17,16 +16,16 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
             <div class="form-group">
-                <label asp-for="PersNr" class="control-label"></label>
-                <select class = "form-control" asp-for = "PersNr" asp-items = "@await personNumberService.GetMemberPersonNumberAsync()">
+                <label asp-for="MemberId" class="control-label"></label>
+                <select class = "form-control" asp-for = "MemberId" asp-items = "@await personNumberService.GetMemberPersonNumberAsync()">
                     <option selected = "selected" value = "">Välj en medlem</option>
                 </select>
-                <span asp-validation-for="PersNr" class="text-danger"></span>
+                <span asp-validation-for="MemberId" class="text-danger"></span>
             </div>
 
             <div class="form-group">
-                <label asp-for="VehicleType" class="control-label"></label>
-                <select class = "form-control" asp-for = "VehicleType" asp-items = "@await vehicleTypeService.GetVehicleTypeSelectListAsync()">
+                <label asp-for="VehicleTypeId" class="control-label"></label>
+                <select class = "form-control" asp-for = "VehicleTypeId" asp-items = "@await vehicleTypeService.GetVehicleTypeSelectListAsync()">
                     <option selected = "selected" value = "">Välj en fordonstyp</option>
                 </select>
             </div>
@@ -47,9 +46,9 @@
                 <span asp-validation-for="Brand" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Model" class="control-label"></label>
-                <input asp-for="Model" class="form-control" />
-                <span asp-validation-for="Model" class="text-danger"></span>
+                <label asp-for="VehicleModel" class="control-label"></label>
+                <input asp-for="VehicleModel" class="form-control" />
+                <span asp-validation-for="VehicleModel" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="WheelCount" class="control-label"></label>
@@ -61,14 +60,14 @@
                 <select asp-for="MemberId" class ="form-control" asp-items="ViewBag.MemberId"></select>
             </div>*@
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Checka in" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">Hem</a>
 </div>
 
 @section Scripts {

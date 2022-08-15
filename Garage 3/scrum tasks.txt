@@ -1,0 +1,37 @@
+
+Krav
+
+- Medlemmar skall kunna registreras och lagras i databasen
+	- Enbart ett konto per medlem tillåts !EJ KLAR, REMOTE FUNGERAR INTE!
+
+- Sökbar översiktsvy för registrerade medlemmar
+	- navigation till översiktsvy för ägare där alla fordon visas
+	- kolumn för antal fordon per ägare??
+	- Sortering
+		- Sortering på medlemmens förnamn
+		- Sortering på på de två första tecknen i namnet
+		- Om två namn har samma första tecken behålls ordningen (stable sort)
+		- Sortering är case sensitive (versaler sorteras före gemener)
+
+- Översiktsvy för parkerade fordon med:
+	- Ägare, Medlemskap, Fordonstyp, RegNum och ParkTid
+	- Sökfunktion för fordonstyp och registreringsnummer
+
+- Kvitto med medlemsinformation
+
+
+
+Klara
+
+- Parkering
+	- när ett fordon parkeras skall det kopplas till registrerad ägare
+	- när ett fordon parkeras skall det kopplas till fordonstyp
+	- endast medlemmar över 18 år ska kunna parkera ett fordon
+
+- Det skall gå att lägga till nya fordonstyper
+
+- Medlemmar skall kunna registreras och lagras i databasen
+	- När en medlem registreras ska personnummer anges
+	- Personnummer skall valideras att det är rätt format
+	- Förnamn får inte vara samma som efternamn
+	- Ett fordon kan bara ha en ägare
