@@ -31,7 +31,7 @@ namespace Garage_3.Controllers
                 double parkedTime = (DateTime.Now - parkingSpot.ArrivalTime).TotalMinutes;
                 Vehicle? vehicle  = _context.Vehicle.Where(v => v.Id == parkingSpot.VehicleId).FirstOrDefault();
                 Member? member    = _context.Member.Where(m => m.Id == vehicle.MemberId).FirstOrDefault();
-                VehicleType type  = vehicle.VehicleType;
+                //VehicleType type  = vehicle.VehicleType;
 
                 hours = (int)parkedTime / 60;
                 minutes = (int)(parkedTime - (hours * 60));
@@ -44,7 +44,7 @@ namespace Garage_3.Controllers
                 vm.RegNr = vehicle.RegNbr;
                 vm.Brand = vehicle.Brand;
                 vm.Model = vehicle.Model;
-                vm.Type = type.Name;
+                vm.Type = vehicle.VehicleType.Name;//type.Name;
                 vm.Color = vehicle.Color;
                 vm.WheelCount = vehicle.WheelCount;
              
