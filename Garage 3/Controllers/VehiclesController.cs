@@ -139,20 +139,45 @@ namespace Garage_3.Controllers
         // POST: Vehicles/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        //public async Task<IActionResult> DeleteConfirmed(int id)
+        //{
+        //    if (_context.Vehicle == null)
+        //    {
+        //        return Problem("Entity set 'Garage_3Context.Vehicle'  is null.");
+        //    }
+        //    var vehicle = await _context.Vehicle.FindAsync(id);
+        //    if (vehicle != null)
+        //    {
+        //        _context.Vehicle.Remove(vehicle);
+        //    }
+
+        //    await _context.SaveChangesAsync();
+        //    return RedirectToAction(nameof(Index));
+        //}
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             if (_context.Vehicle == null)
             {
-                return Problem("Entity set 'Garage_3Context.Vehicle'  is null.");
+                return Problem("Entity set 'Garage_2_0Context.ParkedVehicle'  is null.");
             }
-            var vehicle = await _context.Vehicle.FindAsync(id);
-            if (vehicle != null)
+            var parkedVehicle = await _context.Vehicle.FindAsync(id);
+            var member 
+            if (parkedVehicle != null)
             {
-                _context.Vehicle.Remove(vehicle);
+                _context.Vehicle.Remove(parkedVehicle);
+                await _context.SaveChangesAsync();
+                TempData["AlertMessage"] = "Fordonet har checkat ut utan problem!";
             }
-            
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            else
+                return NotFound();
+
+            //var receipt = new ReceiptViewModel(parkedVehicle.ParkTime,
+            //                                   parkedVehicle.RegNbr!,
+            //                                   parkedVehicle.Color!,
+            //                                   parkedVehicle.Brand!,
+            //                                   member.PersNr!);
+
+            return View("Receipt"/*, receipt*/);
         }
 
         private bool VehicleExists(int id)
