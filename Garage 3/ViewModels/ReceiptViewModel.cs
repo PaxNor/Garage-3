@@ -5,6 +5,12 @@ namespace Garage_3.ViewModels
 {
     public class ReceiptViewModel
     {
+        [DisplayName("Förnamn")]
+        public string FirstName { get; set; }
+
+        [DisplayName("Efternamn")]
+        public string LastName { get; set; }
+
         [DisplayName("Medlem")]
         public string? PersNr { get; set; }
 
@@ -29,7 +35,7 @@ namespace Garage_3.ViewModels
         [DisplayName("Avgiftsbelagd tid")]
         public int BillableTime { get; private set; }
 
-        public ReceiptViewModel(DateTime arrival, string regNbr, string color, string brand, string? persNr)
+        public ReceiptViewModel(DateTime arrival, string regNbr, string color, string brand, string? persNr, string firstName, string lastName)
         {
             Arrival = arrival;
             Departure = DateTime.Now;
@@ -37,6 +43,9 @@ namespace Garage_3.ViewModels
             Color = color;
             Brand = brand;
             PersNr = persNr;
+            PersNr = persNr;
+            LastName = lastName;
+            FirstName = firstName;
 
             double elapsedTime = (Departure - Arrival).TotalMinutes;
             BillableTime = (int)Math.Ceiling(elapsedTime / 60);
@@ -47,7 +56,6 @@ namespace Garage_3.ViewModels
                                                                      hours != 1 ? "r" : "",
                                                                      minutes,
                                                                      minutes != 1 ? "er" : "");
-            PersNr = persNr;
         }
 
     }

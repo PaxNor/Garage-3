@@ -244,7 +244,9 @@ namespace Garage_3.Controllers
                 vehicle.RegNbr,
                 vehicle.Color!,
                 vehicle.Brand!,
-                member.PersNr);
+                member.PersNr,
+                member.FirstName,
+                member.LastName);
 
             //vehicle.Parking = null;
 

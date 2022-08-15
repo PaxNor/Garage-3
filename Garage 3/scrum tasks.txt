@@ -1,8 +1,6 @@
 
 Krav
 
-- Medlemmar skall kunna registreras och lagras i databasen
-	- Enbart ett konto per medlem tillåts !EJ KLAR, REMOTE FUNGERAR INTE!
 
 - Sökbar översiktsvy för registrerade medlemmar
 	- navigation till översiktsvy för ägare där alla fordon visas
@@ -13,11 +11,7 @@ Krav
 		- Om två namn har samma första tecken behålls ordningen (stable sort)
 		- Sortering är case sensitive (versaler sorteras före gemener)
 
-- Översiktsvy för parkerade fordon med:
-	- Ägare, Medlemskap, Fordonstyp, RegNum och ParkTid
-	- Sökfunktion för fordonstyp och registreringsnummer
 
-- Kvitto med medlemsinformation
 
 
 
@@ -35,3 +29,12 @@ Klara
 	- Personnummer skall valideras att det är rätt format
 	- Förnamn får inte vara samma som efternamn
 	- Ett fordon kan bara ha en ägare
+
+- Översiktsvy för parkerade fordon med:
+	- Ägare, Medlemskap, Fordonstyp, RegNum och ParkTid
+	- Sökfunktion för fordonstyp och registreringsnummer
+
+- Kvitto med medlemsinformation
+
+- Medlemmar skall kunna registreras och lagras i databasen
+	- Enbart ett konto per medlem tillåts 
