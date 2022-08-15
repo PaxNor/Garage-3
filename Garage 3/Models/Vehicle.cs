@@ -26,7 +26,10 @@ namespace Garage_3.Models
 
 
         public VehicleType VehicleType { get; set; }
+        public int VehicleTypeId { get; set; }
         public Parking? Parking { get; set; }
+
+        public Member Member { get; set; }
         public int MemberId { get; set; }
     }
 }

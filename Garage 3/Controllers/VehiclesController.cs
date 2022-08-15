@@ -19,9 +19,42 @@ namespace Garage_3.Controllers
         // GET: Vehicles
         public async Task<IActionResult> Index()
         {
-              return _context.Vehicle != null ? 
-                          View(await _context.Vehicle.ToListAsync()) :
-                          Problem("Entity set 'Garage_3Context.Vehicle'  is null.");
+            List<ParkedVehiclesViewModel> vmList = new();
+            int hours, minutes;
+
+
+            foreach (var parkingSpot in _context.Parking) {
+
+                double parkedTime = (DateTime.Now - parkingSpot.ArrivalTime).TotalMinutes;
+                Vehicle? vehicle = await _context.Vehicle.Include(v => v.Member).Include(v => v.VehicleType).FirstOrDefaultAsync(v => v.Id == parkingSpot.VehicleId);//.FirstOrDefault();
+              // Member? member    = _context.Member.Where(m => m.Id == vehicle.MemberId).FirstOrDefault();
+                //VehicleType type  = vehicle.VehicleType;
+
+                hours = (int)parkedTime / 60;
+                minutes = (int)(parkedTime - (hours * 60));
+
+     
+
+                ParkedVehiclesViewModel vm = new();
+                vm.FirstName =vehicle.Member.FirstName;
+                vm.LastName = vehicle.Member.LastName;
+                vm.PersNr = vehicle.Member.PersNr;
+                vm.ParkedTime = String.Format("{0}:{1}", hours, minutes);
+                vm.RegNr = vehicle.RegNbr;
+                vm.Brand = vehicle.Brand;
+                vm.VehicleModel = vehicle.Model;
+                vm.Type = vehicle.VehicleType.Name;//type.Name;
+                vm.Color = vehicle.Color;
+                vm.WheelCount = vehicle.WheelCount;
+             
+                vmList.Add(vm);
+            }
+
+            return View(vmList);
+
+            //return _context.Vehicle != null ? 
+            //              View(await _context.Vehicle.ToListAsync()) :
+            //              Problem("Entity set 'Garage_3Context.Vehicle'  is null.");
         }
 
         // GET: Vehicles/Details/5
@@ -57,8 +90,8 @@ namespace Garage_3.Controllers
         {
             if (ModelState.IsValid) {
 
-                var member = _context.Member.Where(m => m.PersNr == checkinViewModel.PersNr).First();
-                var vehicleType = _context.VehicleType.Where(vt => vt.Name == checkinViewModel.VehicleType).First();
+              //  var member = _context.Member.Where(m => m.PersNr == checkinViewModel.PersNr).First();
+                //var vehicleType = _context.VehicleType.Where(vt => vt.Id == checkinViewModel.VehicleTypeId).First();
 
                 Parking parking = new Parking() {
                     ArrivalTime = DateTime.Now
@@ -69,15 +102,15 @@ namespace Garage_3.Controllers
                     Color = checkinViewModel.Color,
                     Brand = checkinViewModel.Brand,
                     RegNbr = StringFormatter.CompactLicensePlate(checkinViewModel.RegNbr),
-                    Model = checkinViewModel.Model,
+                    Model = checkinViewModel.VehicleModel,
 
                     // navigation properties
-                    VehicleType = vehicleType,
+                    //VehicleType = vehicleType,
+                    VehicleTypeId = checkinViewModel.VehicleTypeId,
                     Parking = parking,
                     
                     // foreign key
-                    MemberId = member.Id
-                };
+                    MemberId = checkinViewModel.MemberId                };
 
                 _context.Add(vehicle);
                 await _context.SaveChangesAsync();
@@ -180,6 +213,8 @@ namespace Garage_3.Controllers
             
             
             await _context.SaveChangesAsync();
+
+
             return RedirectToAction(nameof(Index));
         }
 
