@@ -16,12 +16,10 @@ namespace Garage_3.Services
         public async Task<IEnumerable<SelectListItem>> GetVehicleTypeSelectListAsync()
         {
             return await _context.VehicleType
-                .Select(m => m.Name)
-                .Distinct()
                 .Select(m => new SelectListItem
                 {
-                    Text = m.ToString(),
-                    Value = m.ToString()
+                    Text = m.Name,
+                    Value = m.Id.ToString()
                 })
                 .ToListAsync();
         }

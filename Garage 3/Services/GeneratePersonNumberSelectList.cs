@@ -15,12 +15,12 @@ namespace Garage_3.Services
         public async Task<IEnumerable<SelectListItem>> GetMemberPersonNumberAsync()
         {
             return await _context.Member
-                .Select(m => m.PersNr)
-                .Distinct()
+               // .Select(m => m.PersNr)
+               // .Distinct()
                 .Select(m => new SelectListItem
                 {
-                    Text = m.ToString(),
-                    Value = m.ToString()
+                    Text = m.PersNr,
+                    Value = m.Id.ToString()
                 })
                 .ToListAsync();
         }
