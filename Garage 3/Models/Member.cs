@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using Garage_3.Validations;
+using System.ComponentModel;
 
 namespace Garage_3.Models
 {
@@ -10,10 +11,12 @@ namespace Garage_3.Models
         public string FirstName { get; set; }
 
         [DisplayName("Efternamn")]
-        //[FullName(ErrorMessage = "Förnamn och Efternamn kan inte vara samma!")]
+        [FullName(ErrorMessage = "Förnamn och Efternamn kan inte vara samma!")]
         public string LastName { get; set; }
 
         [DisplayName("Personnummer")]
+        [PersonNumber(ErrorMessage = "Personnummer måste ha 12 siffror")]
+        //[Remote(action: "IsInDataBase", controller: "MembersController")]
         public string PersNr { get; set; }
 
         public List<Vehicle> Vehicles { get; set; } = new List<Vehicle>();

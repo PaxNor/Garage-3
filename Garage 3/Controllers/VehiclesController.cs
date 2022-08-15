@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
+﻿using Garage_3.Auxiliary;
 using Garage_3.Data;
 using Garage_3.Models;
+using Garage_3.ViewModels;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Garage_3.Controllers
 {
@@ -56,15 +53,37 @@ namespace Garage_3.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,RegNbr,Color,Brand,Model,WheelCount,MemberId")] Vehicle vehicle)
+        public async Task<IActionResult> Create(CheckinViewModel checkinViewModel)
         {
-            if (ModelState.IsValid)
-            {
+            if (ModelState.IsValid) {
+
+                var member = _context.Member.Where(m => m.PersNr == checkinViewModel.PersNr).First();
+                var vehicleType = _context.VehicleType.Where(vt => vt.Name == checkinViewModel.VehicleType).First();
+
+                Parking parking = new Parking() {
+                    ArrivalTime = DateTime.Now
+                };
+
+                Vehicle vehicle = new Vehicle() {
+                    WheelCount = checkinViewModel.WheelCount,
+                    Color = checkinViewModel.Color,
+                    Brand = checkinViewModel.Brand,
+                    RegNbr = StringFormatter.CompactLicensePlate(checkinViewModel.RegNbr),
+                    Model = checkinViewModel.Model,
+
+                    // navigation properties
+                    VehicleType = vehicleType,
+                    Parking = parking,
+                    
+                    // foreign key
+                    MemberId = member.Id
+                };
+
                 _context.Add(vehicle);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(vehicle);
+            return View(checkinViewModel);
         }
 
         // GET: Vehicles/Edit/5
@@ -88,7 +107,7 @@ namespace Garage_3.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,RegNbr,Color,Brand,Model,WheelCount,MemberId")] Vehicle vehicle)
+        public async Task<IActionResult> Edit(int id, /*[Bind("Id,RegNbr,Color,Brand,Model,WheelCount,MemberId")]*/ Vehicle vehicle)
         {
             if (id != vehicle.Id)
             {
@@ -160,24 +179,40 @@ namespace Garage_3.Controllers
             {
                 return Problem("Entity set 'Garage_2_0Context.ParkedVehicle'  is null.");
             }
-            var parkedVehicle = await _context.Vehicle.FindAsync(id);
-            var member 
-            if (parkedVehicle != null)
+
+            var vehicle = await _context.Vehicle.FindAsync(id);
+            var parking = vehicle.Parking;
+            var vehicleType = vehicle.VehicleType;
+            var member = _context.Member.Where(m => m.Id == vehicle.MemberId).FirstOrDefault();
+            //vehicleType.Vehicles.Remove(vehicle);
+ 
+            if (vehicle != null && member != null && parking != null)
             {
-                _context.Vehicle.Remove(parkedVehicle);
-                await _context.SaveChangesAsync();
-                TempData["AlertMessage"] = "Fordonet har checkat ut utan problem!";
+               _context.Parking.Remove(parking);
+               _context.Member.Remove(member);
+               _context.Vehicle.Remove(vehicle);
             }
-            else
-                return NotFound();
+            
+            
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
 
-            //var receipt = new ReceiptViewModel(parkedVehicle.ParkTime,
-            //                                   parkedVehicle.RegNbr!,
-            //                                   parkedVehicle.Color!,
-            //                                   parkedVehicle.Brand!,
-            //                                   member.PersNr!);
+        public async Task<IActionResult> Checkout(int id)
+        {
+            var vehicle = await _context.Vehicle.Include(v => v.Parking).FirstOrDefaultAsync(v => v.Id == id);
 
-            return View("Receipt"/*, receipt*/);
+            //var parkId = vehicle.Parking.Id;
+
+            //var parkingSpot = await _context.
+
+            vehicle.Parking = null;
+
+            _context.Update(vehicle);
+
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction(nameof(Index));
         }
 
         private bool VehicleExists(int id)

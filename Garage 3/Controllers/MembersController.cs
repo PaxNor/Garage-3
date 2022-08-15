@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
+﻿using Garage_3.Auxiliary;
 using Garage_3.Data;
 using Garage_3.Models;
+using Garage_3.ViewModels;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Garage_3.Controllers
 {
@@ -22,10 +19,36 @@ namespace Garage_3.Controllers
         // GET: Members
         public async Task<IActionResult> Index()
         {
-              return _context.Member != null ? 
-                          View(await _context.Member.ToListAsync()) :
-                          Problem("Entity set 'Garage_3Context.Member'  is null.");
+            var viewModel = new MemberOverviewViewModel()
+            {
+                Members = await _context.Member.ToListAsync()
+            };
+            return View(viewModel);
         }
+
+
+
+
+
+        public async Task<IActionResult> MemberOverviewSearch(MemberOverviewViewModel memberOverviewViewModel)
+        {
+            var members = string.IsNullOrWhiteSpace(memberOverviewViewModel.FirstName) ?
+                _context.Member :
+                _context.Member.Where(m => m.FirstName.StartsWith(memberOverviewViewModel.FirstName));
+
+            var viewModel = new MemberOverviewViewModel
+            {
+                Members = await members.ToListAsync()
+            };
+           
+            return View(nameof(Index), viewModel);
+        }
+
+
+
+
+
+
 
         // GET: Members/Details/5
         public async Task<IActionResult> Details(int? id)
@@ -60,11 +83,29 @@ namespace Garage_3.Controllers
         {
             if (ModelState.IsValid)
             {
+                member.PersNr = StringFormatter.CompactPersonNumber(member.PersNr);
                 _context.Add(member);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
             return View(member);
+        }
+
+        /* 
+         * Check if a member is already in the data base
+         * 
+         * This does not work!
+         * 
+         * reference: https://docs.microsoft.com/en-us/aspnet/core/mvc/models/validation?view=aspnetcore-6.0#remote-attribute
+         */
+        [AcceptVerbs("GET", "POST")]
+        public IActionResult IsInDataBase(string personNumber)
+        {
+            int result = _context.Member.Where(m => m.PersNr == personNumber).Count();
+            if (result != 0) {
+                return Json($"Personnummer: {personNumber} finns redan registrerat");
+            }
+            return Json(true);
         }
 
         // GET: Members/Edit/5

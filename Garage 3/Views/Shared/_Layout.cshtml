@@ -42,7 +42,7 @@
 
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="ParkedVehicles" asp-action="Index">Garage</a>
+                <a class="navbar-brand" asp-area="" asp-controller="Members" asp-action="Index">Garage 3</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" 
                         aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -50,16 +50,16 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="nav nav-pills dark">
                         <li class="active">
-                            <a class="nav-link  @indexClass" asp-area="" asp-controller="ParkedVehicles" asp-action="Index">Hem</a>
+                            <a class="nav-link  @indexClass" asp-area="" asp-controller="Members" asp-action="Index">Hem</a>
                         </li>
                         <li class="active">
-                            <a class="nav-link  @checkinClass" asp-area="" asp-controller="ParkedVehicles" asp-action="Checkin">Checka in</a>
+                            <a class="nav-link  @checkinClass" asp-area="" asp-controller="Vehicles" asp-action="Create">Checka in</a>
                         </li>
                         <li class="active">
-                            <a class="nav-link  @overviewClass" asp-area="" asp-controller="ParkedVehicles" asp-action="Overview">Översikt</a>
+                            <a class="nav-link  @overviewClass" asp-area="" asp-controller="Vehicles" asp-action="Overview">Översikt</a>
                         </li>
                         <li class="active">
-                            <a class="nav-link  @privacyClass" asp-area="" asp-controller="ParkedVehicles" asp-action="Stats">Statistik</a>
+                            <a class="nav-link  @privacyClass" asp-area="" asp-controller="Vehicles" asp-action="Stats">Statistik</a>
                         </li>
                     </ul>
 
@@ -85,7 +85,7 @@
 
     <footer class="bg-dark text-light">
         <div class="container text-center">
-            &copy; 2022 - Garage_2._0 - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            &copy; 2022 - Garage 3 - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
             <p class = "my-3">Skapad av | Fredrik Stark | Lara Domnina | Zahed Davodi | Oliver Almén |</p>
         </div>
     </footer>
