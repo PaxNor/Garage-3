@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
-namespace Garage_2._0.ViewModels
+namespace Garage_3.ViewModels
 {
     public class ReceiptViewModel
     {

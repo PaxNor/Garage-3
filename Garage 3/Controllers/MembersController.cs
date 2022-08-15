@@ -81,6 +81,11 @@ namespace Garage_3.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,FirstName,LastName,PersNr")] Member member)
         {
+            if (CheckPerNr(member.PersNr))
+            {
+                ModelState.AddModelError("PersNr", $"Personnummer: {member.PersNr} finns redan registrerat");
+            }
+
             if (ModelState.IsValid)
             {
                 member.PersNr = StringFormatter.CompactPersonNumber(member.PersNr);
@@ -91,6 +96,11 @@ namespace Garage_3.Controllers
             return View(member);
         }
 
+        private bool CheckPerNr(string persNr)
+        {
+            return _context.Member.Any(m => m.PersNr == persNr);
+        }
+
         /* 
          * Check if a member is already in the data base
          * 
@@ -99,11 +109,11 @@ namespace Garage_3.Controllers
          * reference: https://docs.microsoft.com/en-us/aspnet/core/mvc/models/validation?view=aspnetcore-6.0#remote-attribute
          */
         [AcceptVerbs("GET", "POST")]
-        public IActionResult IsInDataBase(string personNumber)
+        public IActionResult IsInDataBase(string persNr)
         {
-            int result = _context.Member.Where(m => m.PersNr == personNumber).Count();
-            if (result != 0) {
-                return Json($"Personnummer: {personNumber} finns redan registrerat");
+            
+            if (CheckPerNr(persNr)) {
+                return Json($"Personnummer: {persNr} finns redan registrerat");
             }
             return Json(true);
         }

@@ -5,6 +5,7 @@ using Garage_3.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
+
 namespace Garage_3.Controllers
 {
     public class VehiclesController : Controller
@@ -191,11 +192,26 @@ namespace Garage_3.Controllers
         // POST: Vehicles/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        //public async Task<IActionResult> DeleteConfirmed(int id)
+        //{
+        //    if (_context.Vehicle == null)
+        //    {
+        //        return Problem("Entity set 'Garage_3Context.Vehicle'  is null.");
+        //    }
+        //    var vehicle = await _context.Vehicle.FindAsync(id);
+        //    if (vehicle != null)
+        //    {
+        //        _context.Vehicle.Remove(vehicle);
+        //    }
+
+        //    await _context.SaveChangesAsync();
+        //    return RedirectToAction(nameof(Index));
+        //}
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             if (_context.Vehicle == null)
             {
-                return Problem("Entity set 'Garage_3Context.Vehicle'  is null.");
+                return Problem("Entity set 'Garage_2_0Context.ParkedVehicle'  is null.");
             }
 
             var vehicle = await _context.Vehicle.FindAsync(id);
@@ -221,18 +237,24 @@ namespace Garage_3.Controllers
         public async Task<IActionResult> Checkout(int id)
         {
             var vehicle = await _context.Vehicle.Include(v => v.Parking).FirstOrDefaultAsync(v => v.Id == id);
+            var member = await _context.Member.Where(m => m.Id == vehicle.MemberId).FirstOrDefaultAsync();
 
-            //var parkId = vehicle.Parking.Id;
+            var receipt = new ReceiptViewModel(
+                vehicle.Parking.ArrivalTime,
+                vehicle.RegNbr,
+                vehicle.Color!,
+                vehicle.Brand!,
+                member.PersNr);
 
-            //var parkingSpot = await _context.
+            //vehicle.Parking = null;
 
-            vehicle.Parking = null;
+            //_context.Update(vehicle);
 
-            _context.Update(vehicle);
+            //await _context.SaveChangesAsync();
 
-            await _context.SaveChangesAsync();
+            return View("Receipt", receipt);
 
-            return RedirectToAction(nameof(Index));
+            //return RedirectToAction(nameof(ReceiptViewModel));
         }
 
         private bool VehicleExists(int id)
