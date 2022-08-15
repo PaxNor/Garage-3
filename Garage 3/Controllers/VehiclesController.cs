@@ -164,13 +164,39 @@ namespace Garage_3.Controllers
             {
                 return Problem("Entity set 'Garage_3Context.Vehicle'  is null.");
             }
+
             var vehicle = await _context.Vehicle.FindAsync(id);
-            if (vehicle != null)
+            var parking = vehicle.Parking;
+            var vehicleType = vehicle.VehicleType;
+            var member = _context.Member.Where(m => m.Id == vehicle.MemberId).FirstOrDefault();
+            //vehicleType.Vehicles.Remove(vehicle);
+ 
+            if (vehicle != null && member != null && parking != null)
             {
-                _context.Vehicle.Remove(vehicle);
+               _context.Parking.Remove(parking);
+               _context.Member.Remove(member);
+               _context.Vehicle.Remove(vehicle);
             }
             
+            
             await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
+
+        public async Task<IActionResult> Checkout(int id)
+        {
+            var vehicle = await _context.Vehicle.Include(v => v.Parking).FirstOrDefaultAsync(v => v.Id == id);
+
+            //var parkId = vehicle.Parking.Id;
+
+            //var parkingSpot = await _context.
+
+            vehicle.Parking = null;
+
+            _context.Update(vehicle);
+
+            await _context.SaveChangesAsync();
+
             return RedirectToAction(nameof(Index));
         }
 
