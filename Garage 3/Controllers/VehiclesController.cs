@@ -250,14 +250,10 @@ namespace Garage_3.Controllers
                 member.LastName);
 
             //vehicle.Parking = null;
-
             //_context.Update(vehicle);
-
             //await _context.SaveChangesAsync();
 
             return View("Receipt", receipt);
-
-            //return RedirectToAction(nameof(ReceiptViewModel));
         }
 
         private bool VehicleExists(int id)
