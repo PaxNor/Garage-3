@@ -4,8 +4,11 @@ namespace Garage_3.ViewModels
 {
     public class MemberOverviewViewModel
     {
-        public IEnumerable<Member> Members { get; set; } = new List<Member>();
-        public string FirstName { get; set; } = string.Empty;
-        
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string PersNr { get; set; }
+        public int NumOfVehicles { get; set; }
+        public string Parked { get; set; }
+
     }
 }

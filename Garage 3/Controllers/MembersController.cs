@@ -17,37 +17,71 @@ namespace Garage_3.Controllers
         }
 
         // GET: Members
-        public async Task<IActionResult> Index()
-        {
-            var viewModel = new MemberOverviewViewModel()
-            {
-                Members = await _context.Member.ToListAsync()
-            };
-            return View(viewModel);
-        }
+        //public async Task<IActionResult> Index()
+        //{
+        //    var viewModel = new MemberOverviewViewModel()
+        //    {
+        //        Members = await _context.Member.ToListAsync()
+        //    };
+        //    return View(viewModel);
+        //}
 
+        //public async Task<IActionResult> MemberOverviewSearch(MemberOverviewViewModel memberOverviewViewModel)
+        //{
+        //    var members = string.IsNullOrWhiteSpace(memberOverviewViewModel.FirstName) ?
+        //        _context.Member :
+        //        _context.Member.Where(m => m.FirstName.StartsWith(memberOverviewViewModel.FirstName));
 
-
-
-
-        public async Task<IActionResult> MemberOverviewSearch(MemberOverviewViewModel memberOverviewViewModel)
-        {
-            var members = string.IsNullOrWhiteSpace(memberOverviewViewModel.FirstName) ?
-                _context.Member :
-                _context.Member.Where(m => m.FirstName.StartsWith(memberOverviewViewModel.FirstName));
-
-            var viewModel = new MemberOverviewViewModel
-            {
-                Members = await members.ToListAsync()
-            };
+        //    var viewModel = new MemberOverviewViewModel
+        //    {
+        //        Members = await members.ToListAsync()
+        //    };
            
-            return View(nameof(Index), viewModel);
+        //    return View(nameof(Index), viewModel);
+        //}
+
+
+
+        public async Task<IActionResult> Index(string sortOrder, string searchString, string currentFilter, int? pageNumber)
+        {
+            ViewData["CurrentSort"] = sortOrder;
+            ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewData["CurrentFilter"] = searchString;
+
+            if (searchString != null)
+            {
+                pageNumber = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+
+            var members = from m in _context.Member
+                          select m;
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                members = members.Where(m => m.LastName.Contains(searchString)
+                                       || m.FirstName.Contains(searchString));
+            }
+
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    members = members.OrderByDescending(m => m.FirstName);
+                    break;
+
+                default:
+                    members = members.OrderBy(m => m.FirstName);
+                    break;
+            }
+            int pageSize = 3;
+            return View(await PaginatedList<Member>.CreateAsync(members.AsNoTracking(), pageNumber ?? 1, pageSize));
+
+            //var memmbers = _context.Member.OrderBy(m => m.FirstName.Substring(0, 2));
+
         }
-
-
-
-
-
 
 
         // GET: Members/Details/5
