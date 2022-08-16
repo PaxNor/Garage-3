@@ -116,6 +116,7 @@ namespace Garage_3.Controllers
 
                 _context.Add(vehicle);
                 await _context.SaveChangesAsync();
+                TempData["AlertMessage"] = "Fordonet har checkat in utan problem!";
                 return RedirectToAction(nameof(Index));
             }
             return View(checkinViewModel);

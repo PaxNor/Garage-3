@@ -125,6 +125,7 @@ namespace Garage_3.Controllers
                 member.PersNr = StringFormatter.CompactPersonNumber(member.PersNr);
                 _context.Add(member);
                 await _context.SaveChangesAsync();
+                TempData["AlertMessage"] = "Medlemmen har registrerats utan problem!";
                 return RedirectToAction(nameof(Index));
             }
             return View(member);
