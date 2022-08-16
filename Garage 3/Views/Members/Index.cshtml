@@ -1,10 +1,10 @@
-﻿@model PaginatedList<Member>
+﻿@model List<MembersViewModel>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Medlemsöversikt";
 }
 
-<h1>Index</h1>
+<h1>Medlemsöversikt</h1>
 
 @*<form class = "my-3" asp-action = "MemberOverviewSearch" asp-controller = "Members" method = "get">
     <div class = "input-group mb-3">
@@ -31,7 +31,8 @@
 @*<p>
     <a asp-action="Create">Registrera medlem</a>
 </p>
-<table class="table">
+*@
+@*<table class="table">
     <thead>
         <tr>
             <th>
@@ -65,6 +66,6 @@
             </td>
         </tr>
 }
-    </tbody>
-</table>*@
+*@    </tbody>
+</table>
 

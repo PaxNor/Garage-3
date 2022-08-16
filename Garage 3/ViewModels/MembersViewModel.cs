@@ -30,6 +30,6 @@ namespace Garage_3.ViewModels
         [DisplayName("Färg")]
         public string Color { get; set; }
         [DisplayName("Hjulantal")]
-        public string WheelCount { get; set; }
+        public int WheelCount { get; set; }
     }
 }

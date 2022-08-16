@@ -28,28 +28,29 @@ namespace Garage_3.Controllers
 
                 double parkedTime = (DateTime.Now - parkingSpot.ArrivalTime).TotalMinutes;
                 Vehicle? vehicle = await _context.Vehicle.Include(v => v.Member).Include(v => v.VehicleType).FirstOrDefaultAsync(v => v.Id == parkingSpot.VehicleId);//.FirstOrDefault();
-              // Member? member    = _context.Member.Where(m => m.Id == vehicle.MemberId).FirstOrDefault();
-                //VehicleType type  = vehicle.VehicleType;
+                                                                                                                                                                     // Member? member    = _context.Member.Where(m => m.Id == vehicle.MemberId).FirstOrDefault();
+                                                                                                                                                                     //VehicleType type  = vehicle.VehicleType;
 
                 hours = (int)parkedTime / 60;
                 minutes = (int)(parkedTime - (hours * 60));
+                      
 
-     
+                if (vehicle != null) { 
+                    ParkedVehiclesViewModel vm = new();
+                    vm.FirstName = vehicle.Member.FirstName;
+                    vm.LastName = vehicle.Member.LastName;
+                    vm.PersNr = vehicle.Member.PersNr;
+                    vm.ParkedTime = String.Format("{0}:{1}", hours, minutes);
+                    vm.RegNr = vehicle.RegNbr;
+                    vm.Brand = vehicle.Brand;
+                    vm.VehicleModel = vehicle.Model;
+                    vm.Type = vehicle.VehicleType.Name;//type.Name;
+                    vm.Color = vehicle.Color;
+                    vm.WheelCount = vehicle.WheelCount;
+                    vm.Id = vehicle.Id;
 
-                ParkedVehiclesViewModel vm = new();
-                vm.FirstName =vehicle.Member.FirstName;
-                vm.LastName = vehicle.Member.LastName;
-                vm.PersNr = vehicle.Member.PersNr;
-                vm.ParkedTime = String.Format("{0}:{1}", hours, minutes);
-                vm.RegNr = vehicle.RegNbr;
-                vm.Brand = vehicle.Brand;
-                vm.VehicleModel = vehicle.Model;
-                vm.Type = vehicle.VehicleType.Name;//type.Name;
-                vm.Color = vehicle.Color;
-                vm.WheelCount = vehicle.WheelCount;
-                vm.Id = vehicle.Id;
-             
-                vmList.Add(vm);
+                    vmList.Add(vm);
+                }
             }
 
             return View(vmList);
@@ -249,9 +250,9 @@ namespace Garage_3.Controllers
                 member.FirstName,
                 member.LastName);
 
-            //vehicle.Parking = null;
-            //_context.Update(vehicle);
-            //await _context.SaveChangesAsync();
+            vehicle.Parking = null;
+            _context.Update(vehicle);
+            await _context.SaveChangesAsync();
 
             return View("Receipt", receipt);
         }

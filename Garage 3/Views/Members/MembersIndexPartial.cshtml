@@ -1,4 +1,4 @@
-﻿@model PaginatedList<Member>
+﻿@model List<MembersViewModel>
 
 <p>
     <a asp-action="Create">Registrera medlem</a>
@@ -14,9 +14,30 @@
             </th>
             
             <th>
-                @Html.DisplayNameFor(model => model[0].PersNr)
+                @Html.DisplayNameFor(model => model[0].PersonNumber)
             </th>
-            <th></th>
+            <th>
+                @Html.DisplayNameFor(model => model[0].NumberOfVehicles)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model[0].IsParked)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model[0].RegNbr)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model[0].Brand)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model[0].Model)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model[0].Color)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model[0].WheelCount)
+            </th>
+
         </tr>
     </thead>
     <tbody>
@@ -29,19 +50,36 @@
                 @Html.DisplayFor(modelItem => item.LastName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.PersNr)
+                @Html.DisplayFor(modelItem => item.PersonNumber)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Redigera</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Detaljer</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Checka ut</a>
+                @Html.DisplayFor(modelItem => item.NumberOfVehicles)
             </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsParked)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RegNbr)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Brand)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Model)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Color)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.WheelCount)
+            </td>
+
         </tr>
 }
     </tbody>
 </table>
 
-@{
+@*@{
     var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
     var nextDisabled = !Model.HasNextPage ? "disabled" : "";
 }
@@ -59,4 +97,4 @@
    asp-route-currentFilter="@ViewData["CurrentFilter"]"
    class="btn btn-default @nextDisabled">
     Framåt
-</a>
+</a>*@

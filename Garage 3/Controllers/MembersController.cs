@@ -36,48 +36,94 @@ namespace Garage_3.Controllers
         //    {
         //        Members = await members.ToListAsync()
         //    };
-           
+
         //    return View(nameof(Index), viewModel);
         //}
 
 
 
-        public async Task<IActionResult> Index(string sortOrder, string searchString, string currentFilter, int? pageNumber)
+        public async Task<IActionResult> Index()// string sortOrder, string searchString, string currentFilter, int? pageNumber)
         {
-            ViewData["CurrentSort"] = sortOrder;
-            ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
-            ViewData["CurrentFilter"] = searchString;
+            //ViewData["CurrentSort"] = sortOrder;
+            //ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            //ViewData["CurrentFilter"] = searchString;
 
-            if (searchString != null)
-            {
-                pageNumber = 1;
+            //if (searchString != null)
+            //{
+            //    pageNumber = 1;
+            //}
+            //else
+            //{
+            //    searchString = currentFilter;
+            //}
+
+            List<MembersViewModel> overviewList = new List<MembersViewModel>();
+            var members = _context.Member.AsNoTracking().Include(m => m.Vehicles);//.Include(m => m.Vehicles.Parking);
+
+           // var members = from m in _context.Member select m;
+
+            foreach(var member in members) {
+
+                int vehicleCount = member.Vehicles.Count;
+
+                foreach(var vehicle in member.Vehicles) {
+
+                    var overview = new MembersViewModel();
+                    overview.FirstName = member.FirstName;
+                    overview.LastName = member.LastName;
+                    overview.PersonNumber = member.PersNr;
+
+                    overview.Brand = vehicle.Brand;
+                    overview.RegNbr = vehicle.RegNbr;
+                    overview.Color = vehicle.Color;
+                    overview.Model = vehicle.Model;
+                    overview.WheelCount = vehicle.WheelCount;
+
+                    overview.NumberOfVehicles = vehicleCount;
+                    //overview.IsParked = vehicle.Parking == null ? "" : "P";// "🅿";
+                    var parking = _context.Parking.Where(p => p.VehicleId == vehicle.Id).FirstOrDefault();
+                    overview.IsParked = parking == null ? "" : "🅿";
+
+                    overviewList.Add(overview);
+                }
             }
-            else
-            {
-                searchString = currentFilter;
-            }
 
-            var members = from m in _context.Member
-                          select m;
 
-            if (!String.IsNullOrEmpty(searchString))
-            {
-                members = members.Where(m => m.LastName.Contains(searchString)
-                                       || m.FirstName.Contains(searchString));
-            }
-
-            switch (sortOrder)
-            {
-                case "name_desc":
-                    members = members.OrderByDescending(m => m.FirstName);
-                    break;
-
-                default:
-                    members = members.OrderBy(m => m.FirstName);
-                    break;
-            }
             int pageSize = 3;
-            return View(await PaginatedList<Member>.CreateAsync(members.AsNoTracking(), pageNumber ?? 1, pageSize));
+
+
+            //if (!String.IsNullOrEmpty(searchString))
+            //{
+            //    //members = members.Where(m => m.LastName.Contains(searchString)
+            //    //                       || m.FirstName.Contains(searchString));
+            //    var m = overviewList.Where(m => m.LastName.Contains(searchString)
+            //                            || m.FirstName.Contains(searchString)).AsQueryable();
+
+            //    overviewList = await PaginatedList<MembersViewModel>.CreateAsync(m, pageNumber ?? 1, pageSize).ToList();//.ToList();                     
+            //}
+
+            //switch (sortOrder)
+            //{
+            //    case "name_desc":
+            //        overviewList = overviewList.OrderByDescending(m => m.FirstName).ToList();
+            //        break;
+
+            //    default:
+            //        overviewList = overviewList.OrderBy(m => m.FirstName).ToList();
+            //        break;
+            //    //case "name_desc":
+            //    //    members = members.OrderByDescending(m => m.FirstName);
+            //    //    break;
+
+            //    //default:
+            //    //    members = members.OrderBy(m => m.FirstName);
+            //    //    break;
+            //}
+
+            return View(overviewList);
+            //return View(await PaginatedList<Member>.CreateAsync(members.AsNoTracking(), pageNumber ?? 1, pageSize));
+            
+            //return View(await PaginatedList<MembersViewModel>.CreateAsync(overviewList.AsQueryable(), pageNumber ?? 1, pageSize));
 
             //var memmbers = _context.Member.OrderBy(m => m.FirstName.Substring(0, 2));
 
