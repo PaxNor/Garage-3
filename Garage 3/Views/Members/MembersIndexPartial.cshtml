@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Member>
+﻿@model PaginatedList<Member>
 
 <p>
     <a asp-action="Create">Registrera medlem</a>
@@ -7,13 +7,14 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.FirstName)
+               <a asp-action="Index" asp-route-sortOrder="@ViewData["NameSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Förnamn</a>
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.LastName)
+             <th>
+                Efternamn
             </th>
+            
             <th>
-                @Html.DisplayNameFor(model => model.PersNr)
+                @Html.DisplayNameFor(model => model[0].PersNr)
             </th>
             <th></th>
         </tr>
@@ -39,3 +40,23 @@
 }
     </tbody>
 </table>
+
+@{
+    var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+    var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+}
+
+<a asp-action="Index"
+   asp-route-sortOrder="@ViewData["CurrentSort"]"
+   asp-route-pageNumber="@(Model.PageIndex - 1)"
+   asp-route-currentFilter="@ViewData["CurrentFilter"]"
+   class="btn btn-default @prevDisabled">
+    Bakåt
+</a>
+<a asp-action="Index"
+   asp-route-sortOrder="@ViewData["CurrentSort"]"
+   asp-route-pageNumber="@(Model.PageIndex + 1)"
+   asp-route-currentFilter="@ViewData["CurrentFilter"]"
+   class="btn btn-default @nextDisabled">
+    Framåt
+</a>
