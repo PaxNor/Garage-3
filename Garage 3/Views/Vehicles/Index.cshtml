@@ -4,6 +4,15 @@
     ViewData["Title"] = "Parkerade fordon";
 }
 
+@if(TempData["AlertMessage"] != null)
+{
+    <div id = "alert" class = "alert alert-success">
+
+    @TempData["AlertMessage"]
+
+    </div>  
+}
+
 <h1>Parkerade fordon</h1>
 
 <p>

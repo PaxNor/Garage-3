@@ -4,6 +4,15 @@
     ViewData["Title"] = "Medlemsöversikt";
 }
 
+@if(TempData["AlertMessage"] != null)
+{
+    <div id = "alert" class = "alert alert-success">
+
+    @TempData["AlertMessage"]
+
+    </div>  
+}
+
 <h1>Medlemsöversikt</h1>
 
 @*<form class = "my-3" asp-action = "MemberOverviewSearch" asp-controller = "Members" method = "get">
