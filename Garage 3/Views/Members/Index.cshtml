@@ -1,4 +1,4 @@
-﻿@model MemberOverviewViewModel
+﻿@model PaginatedList<Member>
 
 @{
     ViewData["Title"] = "Index";
@@ -6,16 +6,27 @@
 
 <h1>Index</h1>
 
-<form class = "my-3" asp-action = "MemberOverviewSearch" asp-controller = "Members" method = "get">
+@*<form class = "my-3" asp-action = "MemberOverviewSearch" asp-controller = "Members" method = "get">
     <div class = "input-group mb-3">
         <input type = "text" class = "form-controll" asp-for = "FirstName" placeholder = "Sök efter medlemmar..." />
         <div class = "input-group-append">
             <button type = "submit" class = "mx-3 btn btn-outline-dark"<i>Sök</i>
         </div>
     </div>
+</form>*@
+
+<form asp-action="Index" method="get">
+    <div class="form-actions no-color">
+        <p>
+            Sök medlem: <input type="text" name="SearchString" value="@ViewData["CurrentFilter"]" />
+            <input type="submit" value="Sök" class="btn btn-default" /> |
+            <a asp-action="Index">Tillbaka till lista</a>
+        </p>
+    </div>
 </form>
 
-<partial name = "MembersIndexPartial" model = "@Model.Members" />
+
+<partial name = "MembersIndexPartial" model = "@Model" />
 
 @*<p>
     <a asp-action="Create">Registrera medlem</a>
